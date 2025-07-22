@@ -6,4 +6,10 @@ $2000 Stimulus Check Payment Documnetation
    :google-site-verification: VD279M_GngGCAqPG6jAJ9MtlNRCU9GusRHzkw__wRkA
    :description: Get the latest updates on the $2000 stimulus check payment, including eligibility, status tracking, and 2025 federal assistance guidance for U.S. residents.
 
+  <div style="text-align:center; margin-top:100px;margin-bottom:100px;">
+        <a href="https://www.google.com/" style="background-color:#007bff; color:#ffffff; padding:12px 28px; font-size:16px; font-weight:bold; text-decoration:none; border-radius:6px; box-shadow:0 4px 6px rgba(0,0,0,0.1); display:inline-block;">
+            Apply now
+        </a>
+    </div>
+
 
