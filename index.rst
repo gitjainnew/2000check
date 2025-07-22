@@ -6,7 +6,6 @@ $2000 Stimulus Check Payment Guide
    :google-site-verification: VD279M_GngGCAqPG6jAJ9MtlNRCU9GusRHzkw__wRkA
    :description: Get the latest updates on the $2000 stimulus check payment, including eligibility, status tracking, and 2025 federal assistance guidance for U.S. residents.
 
-
 .. raw:: html
 
     <div style="text-align:center; margin-top:100px;margin-bottom:100px;">
@@ -15,146 +14,171 @@ $2000 Stimulus Check Payment Guide
         </a>
     </div>
 
-
-
 Overview
 --------
 
-The **$2000 stimulus check payment** is part of proposed federal relief efforts aimed at supporting individuals impacted by economic shifts in 2025. This documentation outlines the status, eligibility logic, request process, and backend infrastructure used to verify and distribute funds.
-
-This guide is intended for informational and development use — such as integrating eligibility checks into support portals or verifying response payloads from government APIs.
+The **$2000 stimulus check payment** is a proposed relief effort from the federal government in response to continued economic stress in 2025. This guide provides the system logic for determining eligibility, payment status, and API simulation for developers integrating relief check monitoring.
 
 .. code-block:: python
 
-   # Internal flag checker for economic relief gateway
-   def validate_income_threshold(user):
-       if user["income"] <= 75000:
-           return True
-       return False
+   class StimulusChecker:
+       def __init__(self, name, income, filing_status):
+           self.name = name
+           self.income = income
+           self.filing_status = filing_status
 
-   # Note: Placeholder logic for prototype only
+       def is_eligible(self):
+           return self.income <= 75000 if self.filing_status == "single" else self.income <= 150000
+
+       def expected_amount(self):
+           return 2000 if self.is_eligible() else 0
+
+   # Usage
+   user = StimulusChecker("Alex", 68000, "single")
+   print(user.expected_amount())  # $2000 or $0
 
 Eligibility Requirements
 ------------------------
 
-To qualify for the **$2000 stimulus check payment**, the following federal criteria generally apply:
+To qualify for the **$2000 stimulus check payment**, you must:
 
-- Must be a U.S. citizen or legal resident
-- Filed 2024 taxes or receive federal benefits
-- Adjusted gross income (AGI):
-  - **≤ $75,000** for individuals
-  - **≤ $150,000** for joint filers
-- Not claimed as a dependent
+- Be a U.S. citizen or legal resident
+- Have filed taxes in 2024 or receive federal benefits
+- Not exceed income thresholds ($75K single, $150K joint)
 - Have a valid Social Security Number
-
-These criteria may change based on future legislation. Always refer to the IRS or official government portals for confirmation.
 
 .. code-block:: json
 
    {
-     "name": "Jane Doe",
-     "filing_status": "single",
-     "agi": 68000,
-     "eligible": true
+     "applicant": {
+       "ssn": "123-45-6789",
+       "residency": "USA",
+       "tax_filed": true,
+       "income": 69000,
+       "filing_status": "single",
+       "dependent": false
+     },
+     "eligible": true,
+     "amount": 2000
    }
 
 Application & Verification
 --------------------------
 
-Most recipients will **not need to apply**. Payments are automatically processed based on IRS records or federal benefit enrollment. However, the following groups may need to verify or update their information:
-
-- Non-filers (no 2024 tax return)
-- Recently changed address or banking info
-- Dependent status updates
-
-You can check your payment status through the official IRS tracker.
+Most users won’t need to apply again. The IRS uses existing records. However, use this REST API simulation to check your status:
 
 .. code-block:: bash
 
-   curl -X GET https://api.federalrelief.gov/v1/payment-status \
-     -H "Authorization: Bearer your_access_token"
+   curl -X POST https://api.stimulus.gov/v2/check-status \
+     -H "Authorization: Bearer your_api_token" \
+     -H "Content-Type: application/json" \
+     -d '{"ssn": "123-45-6789", "dob": "1990-01-01"}'
 
-   # Dev note: Check 202 response for "processing" flag
+   # Response: { "status": "sent", "method": "direct_deposit" }
+
+.. code-block:: javascript
+
+   async function checkPaymentStatus(ssn, dob) {
+     const response = await fetch('/v2/check-status', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ ssn, dob })
+     });
+     const data = await response.json();
+     return data.status;
+   }
 
 Disbursement Timeline
 ---------------------
 
-The $2000 stimulus check payments are expected to roll out in **phases**:
-
-#. **Phase 1:** Direct deposit recipients
-#. **Phase 2:** Paper checks by mail
-#. **Phase 3:** EIP debit cards for specific users
-
-Estimated start: **Late Q3 2025**, subject to Congressional approval and IRS processing readiness.
+The payment rollout is expected in phases:
 
 .. code-block:: yaml
 
-   payment_schedule:
-     - direct_deposit: Q3_2025
-     - paper_check: Q4_2025
-     - debit_card: Q4_2025
+   disbursement:
+     phase_1:
+       method: direct_deposit
+       date: "2025-09-01"
+     phase_2:
+       method: paper_check
+       date: "2025-10-10"
+     phase_3:
+       method: debit_card
+       date: "2025-11-15"
 
 Tracking Your Payment
 ---------------------
 
-Users can track the status of their stimulus check through:
+To track your stimulus check:
 
-1. **IRS “Get My Payment” tool** (available on official site)
-2. **Bank alerts or direct deposit notifications**
-3. **Mail tracking** (if receiving a paper check or debit card)
+- Use the IRS "Get My Payment" tool
+- Enable bank text/email alerts
+- Watch USPS Informed Delivery if expecting a check
 
-Tracking tools will return payment status codes such as:
+.. code-block:: sql
 
-- `processing`
-- `sent`
-- `returned`
-- `invalid banking info`
+   SELECT status, method, issue_date 
+   FROM stimulus_payments 
+   WHERE ssn = '123-45-6789';
+
+.. code-block:: python
+
+   def fetch_user_status(ssn):
+       db = connect_db()
+       query = f"SELECT * FROM payments WHERE ssn='{ssn}'"
+       return db.execute(query).fetchone()
 
 Common Issues
 -------------
 
-**Q: What if I didn’t receive the payment but believe I’m eligible?**  
-A: You may need to file a Recovery Rebate Credit on your 2025 tax return.
+**Issue 1:** Did not receive payment  
+**Fix:** File a 2025 Recovery Rebate Credit
 
-**Q: Can I update my bank account on file?**  
-A: No updates are allowed after processing begins. Changes must occur via the IRS portal before issuance.
+**Issue 2:** Banking info outdated  
+**Fix:** Update via IRS account before disbursement
 
-**Q: I received a check for someone else — what should I do?**  
-A: Return the check to the IRS. Do not attempt to deposit it.
+**Issue 3:** Wrong recipient received check  
+**Fix:** Return to IRS or report via form 3911
+
+.. code-block:: shell
+
+   # Check if direct deposit failed
+   grep "ACH_FAIL" /var/log/stimulus-disbursements.log
 
 Security & Fraud Warning
 ------------------------
 
-Stimulus checks are issued directly from federal authorities. Be aware of common scams:
-
-- No government agency will call or email requesting personal data for payment
-- Never share your Social Security number or bank info with unverified sources
-- Use only official `.gov` websites
+Avoid scams. The government **does not ask** for payments or personal data via email/text.
 
 .. code-block:: cpp
 
-   bool isScamMessage(string message) {
-       return message.find("gift card") != string::npos ||
-              message.find("wire transfer") != string::npos;
+   bool isPhishingAttempt(string message) {
+       vector<string> redFlags = {"gift card", "click here", "verify bank"};
+       for (string phrase : redFlags)
+           if (message.find(phrase) != string::npos)
+               return true;
+       return false;
    }
 
-   // Basic detection logic for frontend validation modules
+.. code-block:: html
 
-Legal and Contact Information
------------------------------
+   <!-- Fake email sample -->
+   <div class="email-alert">
+     <p>Click here to claim your $2000 check: <a href="http://scam.com">scam.com</a></p>
+   </div>
 
-This guide is for informational purposes only. Refer to [https://www.irs.gov](https://www.irs.gov) or [https://www.usa.gov](https://www.usa.gov) for verified updates regarding the $2000 stimulus check payment program.
+Legal & Contact Information
+---------------------------
 
-.. note::
+This is a public documentation reference. Visit:
 
-   All policies are determined by federal legislation and may vary depending on the final bill passed by Congress.
+- https://www.irs.gov/coronavirus/economic-impact-payments
+- https://www.usa.gov/covid-stimulus-checks
+
+.. code-block:: markdown
+
+   **IRS Hotline:** 1-800-829-1040  
+   **Official Portal:** [Get My Payment](https://www.irs.gov/get-my-payment)
 
 .. footer::
-   © 2025 Economic Assistance Guide | Not affiliated with the U.S. Government
-
-.. note::
-
-   Mochi Health is a registered entity for virtual care coordination and not intended for resale or rebranding.
-
-.. footer::  
-   Mochi Health Documentation © 2025 — Confidential Internal Access
+   IRS API Documentation • Federal Assistance | © 2025 All rights reserved
