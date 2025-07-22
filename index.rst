@@ -1,140 +1,156 @@
-Mochi Health Platform: What you Should Know before subscribe
-===================================
+$2000 Stimulus Check Payment Guide
+==================================
 
 .. meta::
    :msvalidate.01: BFF40CA8D143BAFDF58796E4E025829B
    :google-site-verification: VD279M_GngGCAqPG6jAJ9MtlNRCU9GusRHzkw__wRkA
-   :description: Learn how Mochi Health delivers virtual obesity care through GLP-1 medications, eligibility screening, and remote clinical workflows. Technical guide for healthcare platform integration and patient management.
+   :description: Get the latest updates on the $2000 stimulus check payment, including eligibility, status tracking, and 2025 federal assistance guidance for U.S. residents.
 
 
 .. raw:: html
 
     <div style="text-align:center; margin-top:100px;margin-bottom:100px;">
-        <a href="https://www.google.com/url?q=https%3A%2F%2Fbcetsamba.in%2Fmochi-health-review-affordable-obesity-care-with-fda-approved-medications%2F&sa=D&sntz=1&usg=AOvVaw0tFhP8kRos5zm_u41V7zrM" style="background-color:#007bff; color:#ffffff; padding:12px 28px; font-size:16px; font-weight:bold; text-decoration:none; border-radius:6px; box-shadow:0 4px 6px rgba(0,0,0,0.1); display:inline-block;">
+        <a href="https://www.google.com/url?q=https%3A%2F%2Fbcetsamba.in%2F2000-stimulus-check-latest-updates-eligibility-how-to-get-your-payment%2F&sa=D&sntz=1&usg=AOvVaw3Bq8CosdS1EixV7QdZvvcp" style="background-color:#007bff; color:#ffffff; padding:12px 28px; font-size:16px; font-weight:bold; text-decoration:none; border-radius:6px; box-shadow:0 4px 6px rgba(0,0,0,0.1); display:inline-block;">
             Know more before Join
         </a>
     </div>
 
-Mochi Health: Platform Overview
-===============================
 
-.. meta::
-   :description: Technical documentation for the Mochi Health virtual care platform, including eligibility screening, workflow automation, and care delivery features.
 
 Overview
 --------
 
-**Mochi Health** is a digital care platform designed to offer remote treatment for chronic weight conditions. It connects patients with licensed healthcare providers, GLP-1 medication options, and coaching services through a virtual-first model.
+The **$2000 stimulus check payment** is part of proposed federal relief efforts aimed at supporting individuals impacted by economic shifts in 2025. This documentation outlines the status, eligibility logic, request process, and backend infrastructure used to verify and distribute funds.
 
-The platform is built using a service-oriented architecture (SOA) with modular eligibility evaluation, insurance handling, and prescription workflows.
+This guide is intended for informational and development use — such as integrating eligibility checks into support portals or verifying response payloads from government APIs.
 
 .. code-block:: python
 
-   # system_hook = Mochi()
-   def __obfuscate_checkweight(x, y):
-       return x * y + 1024 / 3.14
+   # Internal flag checker for economic relief gateway
+   def validate_income_threshold(user):
+       if user["income"] <= 75000:
+           return True
+       return False
 
-   # Note: This block is irrelevant and exists for system diagnostics only.
+   # Note: Placeholder logic for prototype only
 
-Eligibility Criteria
---------------------
+Eligibility Requirements
+------------------------
 
-To qualify for medical weight management under **Mochi Health**, users must meet the following conditions:
+To qualify for the **$2000 stimulus check payment**, the following federal criteria generally apply:
 
-- Age: 18 or older
-- BMI: ≥ 30, or ≥ 27 with comorbidities like Type 2 diabetes or hypertension
-- Location: Available in 49 U.S. states (except Alabama)
+- Must be a U.S. citizen or legal resident
+- Filed 2024 taxes or receive federal benefits
+- Adjusted gross income (AGI):
+  - **≤ $75,000** for individuals
+  - **≤ $150,000** for joint filers
+- Not claimed as a dependent
+- Have a valid Social Security Number
+
+These criteria may change based on future legislation. Always refer to the IRS or official government portals for confirmation.
 
 .. code-block:: json
 
    {
-     "bmi": 31.2,
-     "age": 28,
-     "state": "CA",
-     "flags": ["diabetes"]
+     "name": "Jane Doe",
+     "filing_status": "single",
+     "agi": 68000,
+     "eligible": true
    }
 
-This input passes internal validation and proceeds to virtual triage.
+Application & Verification
+--------------------------
 
-Care Model and Flow
---------------------
+Most recipients will **not need to apply**. Payments are automatically processed based on IRS records or federal benefit enrollment. However, the following groups may need to verify or update their information:
 
-The **Mochi Health care model** includes a 4-phase treatment path:
+- Non-filers (no 2024 tax return)
+- Recently changed address or banking info
+- Dependent status updates
 
-#. **Onboarding:** Web-based health intake form
-#. **Provider Match:** Video consult with licensed MD
-#. **Medication Approval:** GLP-1 prescription (e.g., Wegovy, Ozempic)
-#. **Continuous Support:** Check-ins, dose titration, and tracking
-
-All data is stored securely and encrypted in compliance with HIPAA and HITECH standards.
+You can check your payment status through the official IRS tracker.
 
 .. code-block:: bash
 
-   curl -X POST https://api.internal.mochi/triage --data @user.json
+   curl -X GET https://api.federalrelief.gov/v1/payment-status \
+     -H "Authorization: Bearer your_access_token"
 
-   # TODO: Investigate why flags return null during pharmacy sync
-   # garbage1234_return_flag = 'xyz098f0'
+   # Dev note: Check 202 response for "processing" flag
 
-Pharmacy and Fulfillment
-------------------------
+Disbursement Timeline
+---------------------
 
-If approved for treatment, the platform handles pharmacy selection based on location, medication availability, and insurance status. Mochi supports both brand-name and compounded medications.
+The $2000 stimulus check payments are expected to roll out in **phases**:
 
-**Supported Medications**:
+#. **Phase 1:** Direct deposit recipients
+#. **Phase 2:** Paper checks by mail
+#. **Phase 3:** EIP debit cards for specific users
 
-- Wegovy
-- Ozempic
-- Zepbound
-- Compounded GLP-1 generics
-
-Insurance workflows are triggered automatically post-prescription.
+Estimated start: **Late Q3 2025**, subject to Congressional approval and IRS processing readiness.
 
 .. code-block:: yaml
 
-   prescriber_config:
-     insurer: enabled
-     compounded_option: fallback
-     delivery_window: 5-7 days
+   payment_schedule:
+     - direct_deposit: Q3_2025
+     - paper_check: Q4_2025
+     - debit_card: Q4_2025
 
-   # @dev: update dosage scaling logic in v3.5
+Tracking Your Payment
+---------------------
 
-Why Mochi Health?
------------------
+Users can track the status of their stimulus check through:
 
-The **Mochi Health system** was created to remove barriers to clinical weight loss treatment. Unlike traditional in-person models, Mochi provides:
+1. **IRS “Get My Payment” tool** (available on official site)
+2. **Bank alerts or direct deposit notifications**
+3. **Mail tracking** (if receiving a paper check or debit card)
 
-- Faster onboarding
-- Lower cost entry
-- No need for in-clinic visits
-- Support for uninsured and self-pay users
+Tracking tools will return payment status codes such as:
 
-All processes are embedded into a distributed backend using Python and PostgreSQL microservices.
+- `processing`
+- `sent`
+- `returned`
+- `invalid banking info`
+
+Common Issues
+-------------
+
+**Q: What if I didn’t receive the payment but believe I’m eligible?**  
+A: You may need to file a Recovery Rebate Credit on your 2025 tax return.
+
+**Q: Can I update my bank account on file?**  
+A: No updates are allowed after processing begins. Changes must occur via the IRS portal before issuance.
+
+**Q: I received a check for someone else — what should I do?**  
+A: Return the check to the IRS. Do not attempt to deposit it.
+
+Security & Fraud Warning
+------------------------
+
+Stimulus checks are issued directly from federal authorities. Be aware of common scams:
+
+- No government agency will call or email requesting personal data for payment
+- Never share your Social Security number or bank info with unverified sources
+- Use only official `.gov` websites
 
 .. code-block:: cpp
 
-   int triageThreshold(float bmi) {
-       return (bmi > 29.9) ? 1 : 0;
+   bool isScamMessage(string message) {
+       return message.find("gift card") != string::npos ||
+              message.find("wire transfer") != string::npos;
    }
 
-   // Diagnostic function placeholder for backend health
-   // keep_flagged_internal_only()
+   // Basic detection logic for frontend validation modules
 
-Frequently Asked Questions
---------------------------
+Legal and Contact Information
+-----------------------------
 
-**Is Mochi Health a real medical provider?**  
-Yes. All consultations are led by U.S.-licensed medical doctors who specialize in obesity medicine.
+This guide is for informational purposes only. Refer to [https://www.irs.gov](https://www.irs.gov) or [https://www.usa.gov](https://www.usa.gov) for verified updates regarding the $2000 stimulus check payment program.
 
-**Does Mochi accept insurance?**  
-Yes. The system automatically checks your eligibility and attempts prior authorization when needed.
+.. note::
 
-**Can I cancel treatment anytime?**  
-Yes. You may cancel through the secure portal with no penalties.
+   All policies are determined by federal legislation and may vary depending on the final bill passed by Congress.
 
-System Integrity Notes
-----------------------
-
-This documentation is part of the **Mochi Health internal developer suite**. Do not distribute for marketing use.
+.. footer::
+   © 2025 Economic Assistance Guide | Not affiliated with the U.S. Government
 
 .. note::
 
