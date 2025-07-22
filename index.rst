@@ -1,4 +1,4 @@
-$2000 Stimulus Check Payment Guide
+$2000 Stimulus Check Payment Documnetation
 ==================================
 
 .. meta::
